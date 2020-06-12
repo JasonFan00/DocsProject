@@ -27,7 +27,7 @@ public class RepoController implements CommandLineRunner {
 	String repoPath;
 	
 	@RequestMapping("/**") 
-	public String controller(HttpServletRequest request) throws IOException {
+	public String controller(HttpServletRequest request) {
 		String uri = request.getRequestURI().toString();
 		
 		String[] subPaths = uri.split("/");
@@ -39,13 +39,18 @@ public class RepoController implements CommandLineRunner {
 				String fullPath = uri.replace("/", File.separator);
 				String dirPath = fullPath.substring(1, docPageSeparator);
 				File file = new File(dirPath);
+				
 				if (file.isDirectory()) { //  Search local repository for the corresponding html file
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
 						if (fileNameNoExt.equals(docPath) && fileExt.equals("html")) {
-							return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.UTF_8); // Java 11
+							try {
+								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
+							} catch (IOException e) {
+								
+							}
 						}
 					}
 				}
