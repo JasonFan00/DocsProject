@@ -60,7 +60,8 @@ public class RepoController implements CommandLineRunner {
 		
 		return "";
 	}
-
+	
+	
 	@Override
 	public void run(String... args) throws Exception {
 		this.builder.generateHTMLFromDir(new File(repoPath));

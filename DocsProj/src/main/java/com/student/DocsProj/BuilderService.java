@@ -61,7 +61,7 @@ public class BuilderService {
 		} catch (GitAPIException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		
 		this.repo = new FileRepositoryBuilder().setGitDir(new File(relPath + "\\" + ".git")).build(); //  Account for if linux/windows (file separator)
 	}
@@ -83,7 +83,7 @@ public class BuilderService {
 			if (ext.equals("md")) {
 				// Generate html file
 				File dir = new File(file.getParent());
-				ProcessBuilder pb = new ProcessBuilder("grip", name, "--title="+name, "--export");
+				ProcessBuilder pb = new ProcessBuilder("grip", name, "--title="+name, "--export");  // grip will replace any old html files with the same name
 		        pb.directory(dir); // getParent may occasionally be null, handle it
 		        Process proc = pb.start();
 		        
