@@ -43,7 +43,7 @@ public class RepoController implements CommandLineRunner {
 				if (file.isDirectory()) { //  Search local repository for the corresponding html file
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
-						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName()).toLowerCase();
+						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
 						if (fileNameNoExt.equals(docPath) && fileExt.equals("html")) {
 							try {
