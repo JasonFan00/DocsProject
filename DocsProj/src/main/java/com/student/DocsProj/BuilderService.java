@@ -83,7 +83,7 @@ public class BuilderService {
 			if (ext.equals("md")) {
 				// Generate html file
 				File dir = new File(file.getParent());
-				ProcessBuilder pb = new ProcessBuilder("grip", name, "--title="+name, "--export");  // grip will replace any old html files with the same name
+				ProcessBuilder pb = new ProcessBuilder("grip", name, "--title="+name.toLowerCase(), "--export");  // grip will replace any old html files with the same name
 		        pb.directory(dir); // getParent may occasionally be null, handle it
 		        Process proc = pb.start();
 		        
@@ -96,10 +96,8 @@ public class BuilderService {
 		        
 		        File newFile = getNewHTML(dir, FilenameUtils.removeExtension(name));
 		        if (newFile != null) {
-		        	System.out.println("Cleaning up file");
 		        	pageCleaner.cleanup(newFile);
 		        } else {
-		        	System.out.println("not found");
 		        }
 			}
 		}
@@ -112,7 +110,6 @@ public class BuilderService {
 			String fileName = file.getName();
 			String fileNameNoExt = FilenameUtils.removeExtension(fileName);
 			if (FilenameUtils.getExtension(fileName).equals("html") && fileNameNoExt.equals(nameNoExt)) {
-				System.out.println("found ele");
 				return file;
 			}
 		}

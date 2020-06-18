@@ -35,7 +35,7 @@ public class RepoController implements CommandLineRunner {
 		if (subPaths.length > 1) {
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
 				int docPageSeparator = uri.lastIndexOf("/");
-				String docPath = uri.substring(docPageSeparator + 1);
+				String docPath = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
 				String fullPath = uri.replace("/", File.separator);
 				String dirPath = fullPath.substring(1, docPageSeparator);
 				File file = new File(dirPath);
@@ -43,7 +43,7 @@ public class RepoController implements CommandLineRunner {
 				if (file.isDirectory()) { //  Search local repository for the corresponding html file
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
-						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
+						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName()).toLowerCase();
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
 						if (fileNameNoExt.equals(docPath) && fileExt.equals("html")) {
 							try {
