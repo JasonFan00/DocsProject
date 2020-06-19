@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,8 +27,8 @@ public class RepoController implements CommandLineRunner {
 	@Value("${relativeRepoPath}")
 	String repoPath;
 	
-	@RequestMapping("/**") 
-	public String controller(HttpServletRequest request) {
+	@RequestMapping("/repo/**") 
+	public String repoController(HttpServletRequest request) {
 		String uri = request.getRequestURI().toString();
 		
 		String[] subPaths = uri.split("/");
@@ -45,7 +46,7 @@ public class RepoController implements CommandLineRunner {
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
-						if (fileNameNoExt.equals(docPath) && fileExt.equals("html")) {
+						if (fileNameNoExt.toLowerCase().equals(docPath) && fileExt.equals("html")) {
 							try {
 								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
 							} catch (IOException e) {
@@ -58,7 +59,7 @@ public class RepoController implements CommandLineRunner {
 			}
 		}
 		
-		return "";
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
 	
 	
