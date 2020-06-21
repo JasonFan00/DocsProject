@@ -24,10 +24,10 @@ public class RepoController implements CommandLineRunner {
 	@Autowired
 	BuilderService builder;
 	
-	@Value("${relativeRepoPath}")
+	@Value("${repoPath}")
 	String repoPath;
 	
-	@RequestMapping("/repo/**") 
+	@RequestMapping("/repo/**")
 	public String repoController(HttpServletRequest request) {
 		String uri = request.getRequestURI().toString();
 		
@@ -36,17 +36,17 @@ public class RepoController implements CommandLineRunner {
 		if (subPaths.length > 1) {
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
 				int docPageSeparator = uri.lastIndexOf("/");
-				String docPath = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
+				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
 				String fullPath = uri.replace("/", File.separator);
-				String dirPath = fullPath.substring(1, docPageSeparator);
-				File file = new File(dirPath);
+				String dirPath = fullPath.substring(5, docPageSeparator);
+				File file = new File(this.repoPath + dirPath);
 				
 				if (file.isDirectory()) { //  Search local repository for the corresponding html file
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
-						if (fileNameNoExt.toLowerCase().equals(docPath) && fileExt.equals("html")) {
+						if (fileNameNoExt.toLowerCase().equals(docName) && fileExt.equals("html")) {
 							try {
 								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
 							} catch (IOException e) {
@@ -65,6 +65,7 @@ public class RepoController implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		this.builder.generateHTMLFromDir(new File(repoPath));
+		this.repoPath = System.getProperty("user.dir") + this.repoPath;
+		this.builder.generateHTMLFromDir(new File(this.repoPath));
 	}
 }

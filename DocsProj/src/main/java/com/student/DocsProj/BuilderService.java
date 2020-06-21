@@ -48,13 +48,14 @@ public class BuilderService {
         }
 	}
 	
-	public BuilderService(@Value("${repoURL}") String repoURL, @Value("${relativeRepoPath}") String relPath) throws IOException {		
-		this.repoFile = new File(relPath);
+	public BuilderService(@Value("${repoURL}") String repoURL, @Value("${repoPath}") String repoPath) throws IOException {
+		repoPath = System.getProperty("user.dir") + repoPath;
+		this.repoFile = new File(repoPath);
 		removeDir(this.repoFile);  //  Clean out any old local repos
 		repoFile.mkdirs(); // handle if false
 		try {
 			Git.cloneRepository().setURI(repoURL).setDirectory(repoFile).call();
-		} catch (TransportException e) {	
+		} catch (TransportException e) {
 		
 		} catch (InvalidRemoteException e) {
 				
@@ -63,7 +64,7 @@ public class BuilderService {
 			e.printStackTrace();
 		}
 		
-		this.repo = new FileRepositoryBuilder().setGitDir(new File(relPath + "\\" + ".git")).build(); //  Account for if linux/windows (file separator)
+		this.repo = new FileRepositoryBuilder().setGitDir(new File(repoPath + File.separator + ".git")).build(); //  Account for if linux/windows (file separator)
 	}
 	
 	/**
