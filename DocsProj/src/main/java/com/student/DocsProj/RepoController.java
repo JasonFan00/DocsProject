@@ -62,6 +62,12 @@ public class RepoController implements CommandLineRunner {
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
 	
+	@RequestMapping("/refresh-ping")
+	public String refreshController(HttpServletRequest request) { 
+		
+		return "";
+	}
+	
 	
 	@Override
 	public void run(String... args) throws Exception {
