@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.apache.commons.io.FilenameUtils;
 
+/**
+ * Controller that handles all incoming requests with /repo in URL path
+ * @author Jason Fan
+ *
+ */
 @RestController
 public class RepoController implements CommandLineRunner {
 	
 	@Autowired
 	BuilderService builder;
 	
-	@Value("${repoPath}")
-	String repoPath;
+	//  Holds common properties that need a postconstruct operation
+	@Autowired
+	PostPropertyConfig config;
+	
 	
 	@RequestMapping("/repo/**")
 	public String repoController(HttpServletRequest request) {
 		String uri = request.getRequestURI().toString();
-		
+		String repoPath = config.getRepoPath();
 		String[] subPaths = uri.split("/");
 		
 		if (subPaths.length > 1) {
@@ -39,7 +47,7 @@ public class RepoController implements CommandLineRunner {
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
 				String fullPath = uri.replace("/", File.separator);
 				String dirPath = fullPath.substring(5, docPageSeparator);
-				File file = new File(this.repoPath + dirPath);
+				File file = new File(repoPath + dirPath);
 				
 				if (file.isDirectory()) { //  Search local repository for the corresponding html file
 					File[] files = file.listFiles();
@@ -71,7 +79,6 @@ public class RepoController implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		this.repoPath = System.getProperty("user.dir") + this.repoPath;
-		this.builder.generateHTMLFromDir(new File(this.repoPath));
+		this.builder.generateHTMLFromDir(new File(config.getRepoPath()));
 	}
 }

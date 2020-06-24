@@ -4,6 +4,8 @@ package com.student.DocsProj;
 import java.io.File;
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -13,17 +15,30 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
+/**
+ * Builds the local repository as well as the respective html files from the .md files
+ * @author Jason Fan
+ *
+ */
 @Service
-public class BuilderService {
+public class BuilderService implements CommandLineRunner {
 		
 	//  The jgit repository object to represent the repo where all pages content/structure is stored
 	private Repository repo;
 	private File repoFile;
 	
+	@Value("${repoURL}") 
+	String repoURL;
+	
 	@Autowired
 	PageCleaner pageCleaner;
+	
+	//  Holds common properties that need a postconstruct operation
+	@Autowired
+	PostPropertyConfig config;
 	
 	/**
 	 * Deletes a directory and its contents, or a file
@@ -48,8 +63,9 @@ public class BuilderService {
         }
 	}
 	
-	public BuilderService(@Value("${repoURL}") String repoURL, @Value("${repoPath}") String repoPath) throws IOException {
-		repoPath = System.getProperty("user.dir") + repoPath;
+	@Override
+	public void run(String... args) throws IOException {
+		String repoPath = config.getRepoPath();
 		this.repoFile = new File(repoPath);
 		removeDir(this.repoFile);  //  Clean out any old local repos
 		repoFile.mkdirs(); // handle if false

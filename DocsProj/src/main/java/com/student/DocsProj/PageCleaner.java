@@ -12,6 +12,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
+/**
+ * Cleans up some extra html that grip puts into the html files, in future will use it to possibly add some extra elements
+ * @author Jason Fan
+ *
+ */
 @Component
 public class PageCleaner {
 	
