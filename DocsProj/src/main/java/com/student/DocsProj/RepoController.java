@@ -1,25 +1,18 @@
 package com.student.DocsProj;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.apache.commons.io.FilenameUtils;
 
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 
@@ -90,7 +82,7 @@ public class RepoController implements CommandLineRunner {
 
 			String hash = "sha1=" + new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(body);  //  Create new hmac instance using SHA1 and env key, then get the digest of request body
 			
-			if (hash.equals(reqSha1)) {  // .equals safe?
+			if (hash.equals(reqSha1)) {  // .equals secure?
 				//  Verified the ping is from github 
 				
 			}
