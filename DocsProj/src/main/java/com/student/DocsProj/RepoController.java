@@ -84,7 +84,7 @@ public class RepoController implements CommandLineRunner {
 			
 			if (hash.equals(reqSha1)) {  // .equals secure?
 				//  Verified the ping is from github 
-				
+				this.builder.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
