@@ -3,6 +3,7 @@ package com.student.DocsProj;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	@RequestMapping("/")
-	public String homeController(HttpServletRequest request) {
+	public String homeController(Model model) {
+		model.addAttribute("message", "Hello Spring MVC 5!");
 		return "index";
 	}
 }
