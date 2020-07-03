@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	@RequestMapping("/")
 	public String homeController(Model model) {
-		model.addAttribute("message", "Hello Spring MVC 5!");
+		model.addAttribute("greeting", "Hello World!");
 		return "index";
 	}
 }
