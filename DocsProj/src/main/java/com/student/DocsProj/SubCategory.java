@@ -2,9 +2,9 @@ package com.student.DocsProj;
 
 public class SubCategory {
 	
-	public String subCategoryName;
-	public String url;
-	public double num;
+	private String subCategoryName;
+	private String url;
+	private double num;
 	
 	public String getsubCategoryName() {
 		return this.subCategoryName;
