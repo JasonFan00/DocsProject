@@ -17,4 +17,8 @@ public class HomeStructure {
 	public List<HomeCategory> getCategories() {
 		return this.categories;
 	}
+	
+	public String hello(){
+		return null;
+	}
 }
