@@ -18,7 +18,7 @@ public class SubCategory {
 		return this.num;
 	}
 	
-	public void setsubCategoryName(String newName) {
+	public void setSubCategoryName(String newName) {
 		this.subCategoryName = newName;
 	}
 	
