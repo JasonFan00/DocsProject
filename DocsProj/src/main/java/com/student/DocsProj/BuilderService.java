@@ -95,11 +95,13 @@ public class BuilderService implements CommandLineRunner {
 	public void generateHTMLFromDir(File file) throws IOException {  //jgit treewalk
 		if (!file.exists()) return;
 		if (file.isDirectory()) {
+			//  if our code reaches this point, we can confirm it is a home category (because directories represent home categories)
 			File[] files = file.listFiles();
 			for (int i = 0; i < files.length; i++) {
 				generateHTMLFromDir(files[i]);
 			}
 		} else {
+			//  if our code gets here, it is a subcategory (because each html file represents a sub category)
 			String name = file.getName();
 			String ext = FilenameUtils.getExtension(name);
 			if (ext.equals("md")) {
@@ -116,12 +118,15 @@ public class BuilderService implements CommandLineRunner {
 					e.printStackTrace();
 				}
 		        
-		        //  Find the newly made file
+		        //  Find the newly made html file
 		        File newFile = getNewHTML(dir, FilenameUtils.removeExtension(name));
 		        if (newFile != null) {
 		        	pageCleaner.cleanup(newFile);
 		        } else {
+		        	
 		        }
+		       		        		
+		        
 			}
 		}
 	}
