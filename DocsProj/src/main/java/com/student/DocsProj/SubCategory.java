@@ -17,4 +17,16 @@ public class SubCategory {
 	public double getSubCategoryNum() {
 		return this.num;
 	}
+	
+	public void setsubCategoryName(String newName) {
+		this.subCategoryName = newName;
+	}
+	
+	public void setSubCategoryUrl(String newUrl) {
+		this.url = newUrl;
+	}
+	
+	public void setSubCategoryNum(double newNum) {
+		this.num = newNum;
+	}
 }
