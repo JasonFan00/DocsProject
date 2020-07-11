@@ -1,5 +1,9 @@
 package com.student.DocsProj;
 
+/**
+ * This class represents the SubCategories that contain a name, an identifying number, and url to the html conversion to a 
+ * markdown file
+ * */
 public class SubCategory {
 	
 	private String subCategoryName;
