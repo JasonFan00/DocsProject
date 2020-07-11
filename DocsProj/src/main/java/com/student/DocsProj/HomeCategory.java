@@ -7,5 +7,5 @@ package com.student.DocsProj;
  */
 
 public class HomeCategory {
-
+	
 }

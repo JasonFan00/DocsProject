@@ -1,5 +1,7 @@
 package com.student.DocsProj;
 
+import java.util.*;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,5 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HomeStructure {
+	private List<HomeCategory> categories = new ArrayList<>();
 	
+	public List<HomeCategory> getCategories() {
+		return this.categories;
+	}
 }
