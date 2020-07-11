@@ -64,6 +64,9 @@ public class BuilderService implements CommandLineRunner {
         }
 	}
 	
+	/** 
+	 *  Run - Executed by spring after the application is started
+	 */
 	@Override
 	public void run(String... args) throws IOException {
 		String repoPath = config.getRepoPath();
@@ -71,6 +74,7 @@ public class BuilderService implements CommandLineRunner {
 		removeDir(this.repoFile);  //  Clean out any old local repos
 		repoFile.mkdirs(); // handle if false
 		try {
+			//  Clone the remote repo
 			Git.cloneRepository().setURI(repoURL).setDirectory(repoFile).call();
 		} catch (TransportException e) {
 		
@@ -85,7 +89,7 @@ public class BuilderService implements CommandLineRunner {
 	}
 	
 	/**
-	 * Starting from directory, create an HTML file for every .md file encountered
+	 * Starting from directory, create an HTML file for every .md file encountered.  Accounts for subdirectories as well.
 	 * @throws IOException
 	 */
 	public void generateHTMLFromDir(File file) throws IOException {  //jgit treewalk
@@ -112,6 +116,7 @@ public class BuilderService implements CommandLineRunner {
 					e.printStackTrace();
 				}
 		        
+		        //  Find the newly made file
 		        File newFile = getNewHTML(dir, FilenameUtils.removeExtension(name));
 		        if (newFile != null) {
 		        	pageCleaner.cleanup(newFile);
@@ -121,6 +126,12 @@ public class BuilderService implements CommandLineRunner {
 		}
 	}
 	
+	/**
+	 * Returns an html file
+	 * @param dir Directory to search for
+	 * @param nameNoExt Name of html file to find
+	 * @return File The html file
+	 */
 	private File getNewHTML(File dir, String nameNoExt) {
 		File[] files = dir.listFiles();
 		for (int i = 0; i < files.length; i++) {
