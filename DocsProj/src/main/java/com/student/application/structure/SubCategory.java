@@ -1,4 +1,4 @@
-package com.student.application;
+package com.student.application.structure;
 
 /**
  * This class represents the SubCategories that contain a name, an identifying number, and url to the html conversion to a 

@@ -1,4 +1,4 @@
-package com.student.application;
+package com.student.application.structure;
 
 import java.util.*;
 

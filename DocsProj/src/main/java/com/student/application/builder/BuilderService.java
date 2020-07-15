@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
-import com.student.application.HomeStructure;
 import com.student.application.PostPropertyConfig;
+import com.student.application.structure.HomeStructure;
 
 /**
  * Builds the local repository as well as the respective html files from the .md files
