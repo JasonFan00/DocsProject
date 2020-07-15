@@ -1,4 +1,4 @@
-package com.student.DocsProj;
+package com.student.application.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

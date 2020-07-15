@@ -1,4 +1,4 @@
-package com.student.DocsProj;
+package com.student.application;
 
 import java.io.File;
 

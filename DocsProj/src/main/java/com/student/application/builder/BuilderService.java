@@ -1,4 +1,4 @@
-package com.student.DocsProj;
+package com.student.application.builder;
 
 
 import java.io.File;
@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+
+import com.student.application.HomeStructure;
+import com.student.application.PostPropertyConfig;
 
 /**
  * Builds the local repository as well as the respective html files from the .md files
