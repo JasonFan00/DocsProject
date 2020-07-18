@@ -48,10 +48,10 @@ public class HomeStructure {
 					// Continue recursion with newly made one to fill that with any subcategories/items too
 					structure(file, categoryNew);
 				} else {
-					//  Check if .html, if so then make a new subcategory
+					//  Check if file is .html, if so then make a new subcategory
 					if (FilenameUtils.getExtension(file.getName()).equals("html")) {
 						//  For future can Use jsoup to grab some more info about the page, also get the url it is mapped to as well as make a number that it represents.  For now just make all numbers 0.0
-						//  for now itemname is based off name of file, but to acommodate spaces in future will need to modify controler since spaces can't go in url
+						//  for now itemname is based off name of file, but to acommodate spaces in future will need to modify controler since spaces can't go in url, can use some character and replace
 						String itemName = file.getName();
 						String absPath = file.getAbsolutePath();
 						String path = absPath.substring(absPath.indexOf("repo") + 6); //  Want to get the substring starting after the /repo/ in the abs path
