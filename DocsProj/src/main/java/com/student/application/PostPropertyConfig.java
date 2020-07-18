@@ -20,7 +20,7 @@ public class PostPropertyConfig {
 	@PostConstruct
 	public void cleanPath() {
 		this.repoPath = this.repoPath.replace("/", File.separator); //  Replace file separators used in app properties file (forward-slash) with whatever system uses
-		this.repoPath = System.getProperty("user.dir") + this.repoPath;
+		this.repoPath = System.getProperty("user.dir") + this.repoPath; //  Make an abs path, not able to do this in application properties alone so is in post construct
 	}
 	
 	public String getRepoPath() {

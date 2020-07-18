@@ -53,7 +53,7 @@ public class RepoController implements CommandLineRunner {
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
-				String fullPath = uri.replace("/", File.separator);
+				String fullPath = uri.replace("/", File.separator); //  clean up the url a bit
 				String dirPath = fullPath.substring(5, docPageSeparator);
 				File file = new File(repoPath + dirPath);
 				
