@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.student.application.PostPropertyConfig;
 import com.student.application.builder.BuilderService;
+import com.student.application.structure.HomeStructure;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -42,6 +43,8 @@ public class RepoController implements CommandLineRunner {
 	@Autowired
 	PostPropertyConfig config;
 	
+	@Autowired
+	HomeStructure structure;
 	
 	@RequestMapping("/repo/**")
 	public String repoController(HttpServletRequest request) {
@@ -78,6 +81,16 @@ public class RepoController implements CommandLineRunner {
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
 	
+	private void generateHTMLFromDir(File dir) {
+		try {
+			this.builder.generateHTMLFromDir(dir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.structure.updateStructure();
+	}
+	
 	@RequestMapping("/refresh-ping")
 	public String refreshController(HttpServletRequest request, @RequestHeader("X-Hub-Signature") String reqSha1, @Value("${repoEnvName}") String var) { 		
 		try {
@@ -88,10 +101,8 @@ public class RepoController implements CommandLineRunner {
 			
 			if (hash.equals(reqSha1)) {  // .equals secure?
 				//  Verified the ping is from github 
-				this.builder.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
+				this.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,7 +112,7 @@ public class RepoController implements CommandLineRunner {
 	
 	
 	@Override
-	public void run(String... args) throws Exception {
-		this.builder.generateHTMLFromDir(new File(config.getRepoPath()));
+	public void run(String... args) {
+		this.generateHTMLFromDir(new File(config.getRepoPath()));
 	}
 }

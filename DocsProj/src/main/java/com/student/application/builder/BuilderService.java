@@ -41,8 +41,6 @@ public class BuilderService implements CommandLineRunner {
 	@Autowired
 	PostPropertyConfig config;
 	
-	@Autowired
-	HomeStructure structure;
 	
 	/**
 	 * Deletes a directory and its contents, or a file
