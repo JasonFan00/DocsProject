@@ -36,7 +36,7 @@ public class HomeStructure {
 		return null;
 	}
 	
-	private void structure(File file, Category category) {
+	private void updateStructure(File file, Category category) {
 		if (!file.exists()) return;
 		File[] files = file.listFiles();
 		for (int i = 0; i < files.length; i++) {
@@ -45,7 +45,7 @@ public class HomeStructure {
 				Category categoryNew = new Category();
 				category.addChildCategory(categoryNew);
 				// Continue recursion with newly made one to fill that with any subcategories/items too
-				structure(files[i], categoryNew);
+				updateStructure(files[i], categoryNew);
 			} else {
 				//  Check if file is .html, if so then make a new subcategory
 				if (FilenameUtils.getExtension(file.getName()).equals("html")) {
@@ -63,6 +63,10 @@ public class HomeStructure {
 		}
 	}
 	
+	private void printStructure() {
+		
+	}
+	
 	public void updateStructure() {
 		File repoRoot = null;
 		try {
@@ -73,7 +77,7 @@ public class HomeStructure {
 		// To do...from the local repo root now construct the structure.  Each directory that has .md/.html files is a category.  Should consider making sub-sub-sub... categories (directories within directories that may/may not contain .md/.html files ("pages").
 		// start at the top level
 		this.rootCategory = new Category(); //  could some spring IoC thing manage local variables? Since new will couple it more
-		structure(repoRoot, this.rootCategory); //  get any child categories and such
+		updateStructure(repoRoot, this.rootCategory); //  get any child categories and such
 		System.out.println("Finished structure");
 		
 		// To do...print out the result to make sure recursion correct
