@@ -12,10 +12,12 @@ import java.util.List;
 public class Category {
 	private List<Category> childrenCategories;
 	private List<CategoryItem> items;
+	private String catName;
 	
-	public Category() {
+	public Category(String name) {
 		this.childrenCategories = new ArrayList<>();
 		this.items = new ArrayList<>();
+		this.catName = name;
 	}
 	
 	public void addChildCategory(Category category) {
@@ -32,5 +34,9 @@ public class Category {
 	
 	public List<CategoryItem> getCategoryItems() {
 		return this.items;
+	}
+	
+	public String getCatName() {
+		return this.catName;
 	}
 }
