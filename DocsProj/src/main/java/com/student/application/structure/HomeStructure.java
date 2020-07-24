@@ -63,27 +63,33 @@ public class HomeStructure {
 				String url = "/repo/" + path;  //  to get to a repo page url path always starts with /repo/
 				Double num = 0.0;
 				CategoryItem item = new CategoryItem(itemName, url, num);
-				System.out.println("Adding: " + itemName);
 				category.addItem(item);
 			}
 		}
 	}
 	
-	// wip
+	// definitely better ways to do this, but works for now
 	private void printStructure(StringBuilder sb, Category category, int level) {
 		sb.append("\n");
+		
+		StringBuilder indentSB = new StringBuilder();
 		for (int i = 0; i < level; i++) {
-			sb.append("\t");
+			indentSB.append("\t");
 		}
-		sb.append(category.getCatName() + "\n");
+		String indents = indentSB.toString();
+		sb.append(indents);
+		sb.append(category.getCatName()); //  Add directory name
 		List<CategoryItem> categoryItems = category.getCategoryItems();
-		for (CategoryItem item : categoryItems) {
-			sb.append("+" + item.getItemName() + "\n");
+		if (categoryItems.size() > 0) sb.append("\n");
+		for (int i = 0; i < categoryItems.size(); i++) {
+			sb.append("\t" + indents + "+" + categoryItems.get(i).getItemName());  //  Add file name, always get an extra indent
+			if (i != categoryItems.size() - 1) sb.append("\n"); // avoid extra unnecessary empty line for last elements
 		}
+		
 		
 		List<Category> childrenCategories = category.getChildCategories();
 		for (Category cat : childrenCategories) {
-			printStructure(sb, cat, ++level);
+			printStructure(sb, cat, level + 1);
 		}
 	}
 	
@@ -114,7 +120,6 @@ public class HomeStructure {
 		// start at the top level
 		this.rootCategory = new Category("ROOT"); //  could some spring IoC thing manage local variables? Since new will couple it more
 		this.updateStructure(repoRoot, this.rootCategory); //  get any child categories and such
-		System.out.println("Finished structure");
 		this.printStructure();
 		// To do...print out the result to make sure recursion correct
 	}
