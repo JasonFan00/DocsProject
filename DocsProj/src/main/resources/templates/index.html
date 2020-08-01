@@ -7,5 +7,12 @@
 </head>
 <body>
    <p th:text="${greeting}"></p>
+   <div th:fragment="main">
+		<ul th:with="category = ${structure}">
+			<h1 th:text = "${category.getCatName()}"></h1> <!--Apparently thymeleaf will call getters/setters automatically if they follow some "format", but for this call getter-->
+			<li th:each="item : ${category.getItems()}" th:text = "${item.getItemName()}"></li>
+			<div th:each="child : ${category.getChildCategories()}" th:with="structure = ${child}" th:include="this :: main"></div>
+		</ul>
+   </div>
 </body>
 </html>

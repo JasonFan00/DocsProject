@@ -32,7 +32,7 @@ public class Category {
 		return this.childrenCategories;
 	}
 	
-	public List<CategoryItem> getCategoryItems() {
+	public List<CategoryItem> getItems() {
 		return this.items;
 	}
 	

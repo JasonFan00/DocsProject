@@ -79,7 +79,7 @@ public class HomeStructure {
 		String indents = indentSB.toString();
 		sb.append(indents);
 		sb.append(category.getCatName()); //  Add directory name
-		List<CategoryItem> categoryItems = category.getCategoryItems();
+		List<CategoryItem> categoryItems = category.getItems();
 		if (categoryItems.size() > 0) sb.append("\n");
 		for (int i = 0; i < categoryItems.size(); i++) {
 			sb.append("\t" + indents + "+" + categoryItems.get(i).getItemName());  //  Add file name, always get an extra indent
