@@ -58,8 +58,8 @@ public class HomeStructure {
 				//  For future can Use jsoup to grab some more info about the page, also get the url it is mapped to as well as make a number that it represents.  For now just make all numbers 0.0
 				//  for now itemname is based off name of file, but to acommodate spaces in future will need to modify controler since spaces can't go in url, can use some character and replace
 				String itemName = file.getName();
-				String absPath = file.getAbsolutePath();
-				String path = absPath.substring(absPath.indexOf("repo") + 6); //  Want to get the substring starting after the /repo/ in the abs path
+				String absPath = FilenameUtils.removeExtension(file.getAbsolutePath()).toLowerCase(); // Don't want the extension in the url, and make everything lowercase in url path
+				String path = absPath.substring(absPath.indexOf("repo") + 5); //  Want to get the substring starting after the /repo/ in the abs path
 				String url = "/repo/" + path;  //  to get to a repo page url path always starts with /repo/
 				Double num = 0.0;
 				CategoryItem item = new CategoryItem(itemName, url, num);

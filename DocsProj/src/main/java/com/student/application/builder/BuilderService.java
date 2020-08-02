@@ -86,7 +86,7 @@ public class BuilderService implements CommandLineRunner {
 			e.printStackTrace();
 		}
 		
-		this.repo = new FileRepositoryBuilder().setGitDir(new File(repoPath + File.separator + ".git")).build(); //  Account for if linux/windows (file separator)
+		this.repo = new FileRepositoryBuilder().setGitDir(new File(repoPath)).build(); //  Account for if linux/windows (file separator)
 	}
 	
 	/**
