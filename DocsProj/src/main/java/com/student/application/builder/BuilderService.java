@@ -2,8 +2,10 @@ package com.student.application.builder;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -45,8 +47,12 @@ public class BuilderService implements CommandLineRunner {
 	/**
 	 * Deletes a directory and its contents, or a file
 	 * @param file
+	 * @throws FileNotFoundException 
 	 */
-	public static void removeDir(File file) {
+	public static void removeDir(File file) throws FileNotFoundException {
+		if (!file.exists()) {
+			throw new FileNotFoundException();
+		}
 		if (file.isDirectory()) {
             if (file.list().length == 0) {
                 file.delete();
@@ -65,6 +71,13 @@ public class BuilderService implements CommandLineRunner {
         }
 	}
 	
+	public static void removeDirForce(File file) throws FileNotFoundException {
+		if (!file.exists()) {
+			throw new FileNotFoundException();
+		}
+		FileUtils.deleteQuietly(file);
+	}
+	
 	/** 
 	 *  Run - Executed by spring after the application is started
 	 */
@@ -72,21 +85,24 @@ public class BuilderService implements CommandLineRunner {
 	public void run(String... args) throws IOException {
 		String repoPath = config.getRepoPath();
 		this.repoFile = new File(repoPath);
-		removeDir(this.repoFile);  //  Clean out any old local repos
-		repoFile.mkdirs(); // handle if false
+		try {
+			BuilderService.removeDirForce(this.repoFile);  //  Clean out any old local repos
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		try {
 			//  Clone the remote repo
-			Git.cloneRepository().setURI(repoURL).setDirectory(repoFile).call();
+			Git.cloneRepository().setURI(repoURL).setDirectory(repoFile).call(); //  Seems this opens up some kind of handle to a file in the .git of cloned repo, so can't delete the .git after cloning bc file is "in use" here
 		} catch (TransportException e) {
-		
+			e.printStackTrace();
 		} catch (InvalidRemoteException e) {
-				
+			e.printStackTrace();	
 		} catch (GitAPIException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		this.repo = new FileRepositoryBuilder().setGitDir(new File(repoPath)).build(); //  Account for if linux/windows (file separator)
 	}
 	
 	/**

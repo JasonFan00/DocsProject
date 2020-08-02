@@ -43,10 +43,12 @@ public class HomeStructure {
 			File[] files = file.listFiles();
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].isDirectory()) {
-					// Make a new home category and add it to parent
-					Category categoryNew = new Category(files[i].getName());
-					category.addChildCategory(categoryNew);
-					updateStructure(files[i], categoryNew);
+					if (!files[i].getName().equals(".git")) {
+						// Make a new home category and add it to parent
+						Category categoryNew = new Category(files[i].getName());
+						category.addChildCategory(categoryNew);
+						updateStructure(files[i], categoryNew);
+					}
 				} else {
 					updateStructure(files[i], category); // update using current category level
 				}
