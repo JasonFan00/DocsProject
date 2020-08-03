@@ -56,20 +56,22 @@ public class RepoController implements CommandLineRunner {
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
-				String fullPath = uri.replace("/", File.separator); //  clean up the url a bit
-				String dirPath = fullPath.substring(5, docPageSeparator);
-				File file = new File(repoPath + dirPath);
+				String fullPathURL = uri.replace("/", File.separator); //  clean up the url a bit
+				String dirPathURL = fullPathURL.substring(5, docPageSeparator).replace('-', ' '); //  let dashes represent spaces
+				File file = new File(repoPath + dirPathURL);
 				
-				if (file.isDirectory()) { //  Search local repository for the corresponding html file
-					File[] files = file.listFiles();
-					for (int i = 0; i < files.length; i++) {
-						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
-						String fileExt = FilenameUtils.getExtension(files[i].getName());
-						if (fileNameNoExt.toLowerCase().equals(docName) && fileExt.equals("html")) {
-							try {
-								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
-							} catch (IOException e) {
-								
+				if (file.exists()) {
+					if (file.isDirectory()) { //  Search local repository for the corresponding html file
+						File[] files = file.listFiles();
+						for (int i = 0; i < files.length; i++) {
+							String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
+							String fileExt = FilenameUtils.getExtension(files[i].getName());
+							if (fileNameNoExt.toLowerCase().equals(docName) && fileExt.equals("html")) {
+								try {
+									return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
+								} catch (IOException e) {
+									
+								}
 							}
 						}
 					}
@@ -81,15 +83,6 @@ public class RepoController implements CommandLineRunner {
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
 	
-	private void generateHTMLFromDir(File dir) {
-		try {
-			this.builder.generateHTMLFromDir(dir);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.structure.updateStructure();
-	}
 	
 	@RequestMapping("/refresh-ping")
 	public String refreshController(HttpServletRequest request, @RequestHeader("X-Hub-Signature") String reqSha1, @Value("${repoEnvName}") String var) { 		
@@ -101,7 +94,7 @@ public class RepoController implements CommandLineRunner {
 			
 			if (hash.equals(reqSha1)) {  // .equals secure?
 				//  Verified the ping is from github 
-				this.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
+				this.builder.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,6 +106,6 @@ public class RepoController implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) {
-		this.generateHTMLFromDir(new File(config.getRepoPath()));
+		this.builder.generateHTMLFromDir(new File(config.getRepoPath()));
 	}
 }

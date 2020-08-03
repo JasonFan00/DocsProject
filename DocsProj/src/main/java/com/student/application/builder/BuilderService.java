@@ -43,6 +43,8 @@ public class BuilderService implements CommandLineRunner {
 	@Autowired
 	PostPropertyConfig config;
 	
+	@Autowired
+	HomeStructure HomeStructure;
 	
 	/**
 	 * Deletes a directory and its contents, or a file
@@ -79,16 +81,18 @@ public class BuilderService implements CommandLineRunner {
 	}
 	
 	/** 
-	 *  Run - Executed by spring after the application is started
+	 *  Remove old repo, clone remote one
 	 */
 	@Override
 	public void run(String... args) throws IOException {
 		String repoPath = config.getRepoPath();
 		this.repoFile = new File(repoPath);
-		try {
-			BuilderService.removeDirForce(this.repoFile);  //  Clean out any old local repos
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (this.repoFile.exists()) {
+			try {
+				BuilderService.removeDirForce(this.repoFile);  //  Clean out any old local repos
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		try {
@@ -109,13 +113,13 @@ public class BuilderService implements CommandLineRunner {
 	 * Starting from directory, create an HTML file for every .md file encountered.  Accounts for subdirectories as well.
 	 * @throws IOException
 	 */
-	public void generateHTMLFromDir(File file) throws IOException {  //jgit treewalk
+	private void generateHTML(File file) throws IOException {  //jgit treewalk
 		if (!file.exists()) return;
 		if (file.isDirectory()) {
 			//  if our code reaches this point, we can confirm it is a home category (because directories represent home categories)
 			File[] files = file.listFiles();
 			for (int i = 0; i < files.length; i++) {
-				generateHTMLFromDir(files[i]);
+				generateHTML(files[i]);
 			}
 		} else {
 			//  if our code gets here, it is a subcategory (because each html file represents a sub category)
@@ -146,6 +150,16 @@ public class BuilderService implements CommandLineRunner {
 		        
 			}
 		}
+	}
+	
+	public void generateHTMLFromDir(File file) {
+		try {
+			this.generateHTML(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.HomeStructure.updateStructure();
 	}
 	
 	/**

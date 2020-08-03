@@ -62,7 +62,7 @@ public class HomeStructure {
 				String itemName = file.getName();
 				String absPath = FilenameUtils.removeExtension(file.getAbsolutePath()).toLowerCase(); // Don't want the extension in the url, and make everything lowercase in url path
 				String path = absPath.substring(absPath.indexOf("repo") + 5); //  Want to get the substring starting after the /repo/ in the abs path
-				String url = "/repo/" + path;  //  to get to a repo page url path always starts with /repo/
+				String url = ("/repo/" + path).replace(' ', '-');  //  to get to a repo page url path always starts with /repo/
 				Double num = 0.0;
 				CategoryItem item = new CategoryItem(itemName, url, num);
 				category.addItem(item);
