@@ -103,7 +103,6 @@ public class BuilderService implements CommandLineRunner {
 		} catch (InvalidRemoteException e) {
 			e.printStackTrace();	
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -156,7 +155,6 @@ public class BuilderService implements CommandLineRunner {
 		try {
 			this.generateHTML(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.HomeStructure.updateStructure();
