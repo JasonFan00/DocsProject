@@ -70,7 +70,12 @@ public class HomeStructure {
 		}
 	}
 	
-	// definitely better ways to do this, but works for now
+	/**
+	 * Prints out the structure
+	 * @param sb
+	 * @param category
+	 * @param level
+	 */
 	private void printStructure(StringBuilder sb, Category category, int level) {
 		sb.append("\n");
 		

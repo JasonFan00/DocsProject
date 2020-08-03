@@ -57,7 +57,7 @@ public class RepoController implements CommandLineRunner {
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
 				String fullPathURL = uri.replace("/", File.separator); //  clean up the url a bit
-				String dirPathURL = fullPathURL.substring(5, docPageSeparator).replace('-', ' '); //  let dashes represent spaces
+				String dirPathURL = fullPathURL.substring(5, docPageSeparator).replace('-', ' '); //  let dashes in the URL represent spaces
 				File file = new File(repoPath + dirPathURL);
 				
 				if (file.exists()) {
