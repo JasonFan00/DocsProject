@@ -25,7 +25,7 @@ public class CategoryItem {
 		return this.url;
 	}
 	
-	public double getSubCategoryNum() {
+	public double getNum() {
 		return this.num;
 	}
 	
@@ -37,7 +37,7 @@ public class CategoryItem {
 		this.url = newUrl;
 	}
 	
-	public void setItemNum(double newNum) {
+	public void setNum(double newNum) {
 		this.num = newNum;
 	}
 }

@@ -60,18 +60,16 @@ public class RepoController implements CommandLineRunner {
 				String dirPathURL = fullPathURL.substring(5, docPageSeparator).replace('-', ' '); //  let dashes in the URL represent spaces
 				File file = new File(repoPath + dirPathURL);
 				
-				if (file.exists()) {
-					if (file.isDirectory()) { //  Search local repository for the corresponding html file
-						File[] files = file.listFiles();
-						for (int i = 0; i < files.length; i++) {
-							String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
-							String fileExt = FilenameUtils.getExtension(files[i].getName());
-							if (fileNameNoExt.toLowerCase().equals(docName) && fileExt.equals("html")) {
-								try {
-									return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
-								} catch (IOException e) {
-									
-								}
+				if (file.exists() && file.isDirectory()) {  //  Search for the file to serve, if any
+					File[] files = file.listFiles();
+					for (int i = 0; i < files.length; i++) {
+						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
+						String fileExt = FilenameUtils.getExtension(files[i].getName());
+						if (fileNameNoExt.toLowerCase().equals(docName) && fileExt.equals("html")) {
+							try {
+								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
+							} catch (IOException e) {
+								
 							}
 						}
 					}
