@@ -33,6 +33,9 @@ public class BuilderService implements CommandLineRunner {
 	private Repository repo;
 	private File repoFile;
 	
+	@Value("${numberSeparatorStr}")
+	private String NUMBER_SEPARATOR_STR;
+	
 	@Value("${repoURL}") 
 	String repoURL;
 	
@@ -122,12 +125,13 @@ public class BuilderService implements CommandLineRunner {
 			}
 		} else {
 			//  if our code gets here, it is a subcategory (because each html file represents a sub category)
-			String name = file.getName();
-			String ext = FilenameUtils.getExtension(name);
+			String fullName = file.getName();
+			String ext = FilenameUtils.getExtension(fullName); 
 			if (ext.equals("md")) {
 				// Generate html file
+				String newFileName = FilenameUtils.removeExtension(fullName).split(this.NUMBER_SEPARATOR_STR)[1];  // To do:  Add error handling here just in case a file is not named properly
 				File dir = new File(file.getParent());
-				ProcessBuilder pb = new ProcessBuilder("grip", name, "--title="+name, "--export");  // grip will replace any old html files with the same name
+				ProcessBuilder pb = new ProcessBuilder("grip", fullName, "--title="+newFileName, "--export");  // grip will replace any old html files with the same name
 		        pb.directory(dir); // getParent may occasionally be null, handle it
 		        Process proc = pb.start();
 		        
@@ -139,7 +143,7 @@ public class BuilderService implements CommandLineRunner {
 				}
 		        
 		        //  Find the newly made html file
-		        File newFile = getNewHTML(dir, FilenameUtils.removeExtension(name));
+		        File newFile = getNewHTML(dir, FilenameUtils.removeExtension(fullName));
 		        if (newFile != null) {
 		        	pageCleaner.cleanup(newFile);
 		        } else {

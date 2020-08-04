@@ -46,6 +46,9 @@ public class RepoController implements CommandLineRunner {
 	@Autowired
 	HomeStructure structure;
 	
+	@Value("${numberSeparatorStr}")
+	private String NUMBER_SEPARATOR_STR;
+	
 	@RequestMapping("/repo/**")
 	public String repoController(HttpServletRequest request) {
 		String uri = request.getRequestURI().toString();
@@ -65,7 +68,7 @@ public class RepoController implements CommandLineRunner {
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
-						if (fileNameNoExt.toLowerCase().equals(docName) && fileExt.equals("html")) {
+						if (fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR)[1].equals(docName) && fileExt.equals("html")) {
 							try {
 								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
 							} catch (IOException e) {
