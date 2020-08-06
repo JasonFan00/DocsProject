@@ -59,15 +59,18 @@ public class HomeStructure {
 			}
 		} else {
 			//  Check if file is .html, if so then make a new subcategory
-			if (FilenameUtils.getExtension(file.getName()).equals("html")) {
+			String filNameFull = file.getName();
+			if (FilenameUtils.getExtension(filNameFull).equals("html")) {
 				//  For future can Use jsoup to grab some more info about the page, also get the url it is mapped to as well as make a number that it represents.  For now just make all numbers 0.0
 				//  for now itemname is based off name of file, but to acommodate spaces in future will need to modify controler since spaces can't go in url, can use some character and replace
-				String itemName = file.getName();
+				String[] itemNameParts = filNameFull.split(NUMBER_SEPARATOR_STR);
+				String fileNameOnly = FilenameUtils.removeExtension(itemNameParts[1]);
+				String fileNameLabel = itemNameParts[0];
 				String absPath = FilenameUtils.getPath(file.getAbsolutePath().toLowerCase()); // Get path but no file name itself at end, added below
 				String path = absPath.substring(absPath.indexOf("repo") + 5); //  Want to get the substring starting after the /repo/ in the abs path
-				String url = ("/repo/" + path + FilenameUtils.removeExtension(itemName).split(this.NUMBER_SEPARATOR_STR)[1].toLowerCase()).replace(' ', '-');  //  to get to a repo page url path will always starts with /repo/.  This line is a mess to read, will cleanup later
-				Double num = Double.parseDouble(itemName.split(NUMBER_SEPARATOR_STR)[0]);  // make this not a double but string in future for more flexibility
-				CategoryItem item = new CategoryItem(itemName, url, num);
+				String url = ("/repo/" + path + fileNameOnly.toLowerCase()).replace(' ', '-');  //  to get to a repo page url path will always starts with /repo/.  This line is a mess to read, will cleanup later
+				Double num = Double.parseDouble(fileNameLabel);  // make this not a double but string in future for more flexibility
+				CategoryItem item = new CategoryItem(fileNameOnly, url, num);
 				category.addItem(item);
 			}
 		}
