@@ -113,19 +113,19 @@ public class BuilderService implements CommandLineRunner {
 	}
 	
 	/**
-	 * Starting from directory, create an HTML file for every .md file encountered.  Accounts for subdirectories as well.
+	 * Starting from directory, create an HTML file for every .md file encountered.  Accounts for subdirectories/nested directories as well.
 	 * @throws IOException
 	 */
 	private void generateHTML(File file) throws IOException {  
 		if (!file.exists()) return;
 		if (file.isDirectory()) {
-			//  if our code reaches this point, we can confirm it is a home category (because directories represent home categories)
+			//  Nothing to make out of a directory other than continue recursive search
 			File[] files = file.listFiles();
 			for (int i = 0; i < files.length; i++) {
 				generateHTML(files[i]);
 			}
 		} else {
-			//  if our code gets here, it is a subcategory (because each html file represents a sub category)
+			//  To do:  Although grip has been maintained for a long time, it is still a dependency (and using processbuilder feels like a bandage solution), so look into an "in-house" solution
 			String fullName = file.getName();
 			String ext = FilenameUtils.getExtension(fullName); 
 			if (ext.equals("md")) {
