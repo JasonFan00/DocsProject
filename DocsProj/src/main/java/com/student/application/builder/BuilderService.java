@@ -76,6 +76,7 @@ public class BuilderService implements CommandLineRunner {
         }
 	}
 	
+	//  Tried before to delete .git from cloned repo...but apparently a java application (this?) always had a certain file in there open, but could not find any handles...most likely something to do with jgit
 	public static void removeDirForce(File file) throws FileNotFoundException {
 		if (!file.exists()) {
 			throw new FileNotFoundException();
@@ -115,7 +116,7 @@ public class BuilderService implements CommandLineRunner {
 	 * Starting from directory, create an HTML file for every .md file encountered.  Accounts for subdirectories as well.
 	 * @throws IOException
 	 */
-	private void generateHTML(File file) throws IOException {  //jgit treewalk
+	private void generateHTML(File file) throws IOException {  
 		if (!file.exists()) return;
 		if (file.isDirectory()) {
 			//  if our code reaches this point, we can confirm it is a home category (because directories represent home categories)
