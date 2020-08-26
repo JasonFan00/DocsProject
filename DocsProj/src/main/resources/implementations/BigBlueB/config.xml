@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Why use xml instead of another properties?  B/c want to get some experience with xml -->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!-- Follows the DTD of java properties in xml, makes it easier to then parse -->
 
+<general-info>
+	<name>Blue B Docs</name>
+	
+</general-info>
