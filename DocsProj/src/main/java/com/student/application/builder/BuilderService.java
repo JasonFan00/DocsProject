@@ -128,7 +128,7 @@ public class BuilderService implements CommandLineRunner {
 			//  To do:  Although grip has been maintained for a long time, it is still a dependency (and using processbuilder feels like a bandage solution), so look into an "in-house" solution
 			String fullName = file.getName();
 			String ext = FilenameUtils.getExtension(fullName); 
-			if (ext.equals("md") && !fullName.equals("README.md")) { // exclude the readme
+			if (ext.equals("md") && !fullName.equals("README.md")) { // exclude the readme in content
 				// Generate html file
 				String newFileName = FilenameUtils.removeExtension(fullName).split(this.NUMBER_SEPARATOR_STR)[1];  // To do:  Add error handling here just in case a file is not named properly
 				File dir = new File(file.getParent());
