@@ -10,6 +10,7 @@
    <div th:fragment="core">
 		<ul th:with="category = ${structure}">
 			<h1 th:text="${category.getCatName()}"></h1> <!--Apparently thymeleaf will call getters/setters automatically if they follow some "format", but for this call getter-->
+<<<<<<< HEAD
 			<div class = "row">
 				<li th:each="item : ${category.getItems()}">
 					<div class="col-sm-2">
@@ -18,6 +19,10 @@
 				</li>
 				<div th:each="child : ${category.getChildCategories()}" th:with="structure = ${child}" th:include="this :: core"></div>
 			</div>
+=======
+			<li th:each="item : ${category.getItems()}"></a> <strong th:text="${item.getLabel()}"></strong> <a th:href="@{${item.getUrl()}}" th:text = "${item.getItemName()}"></a></li>
+			<div th:each="child : ${category.getChildCategories()}" th:with="structure = ${child}" th:include="this :: core"></div>
+>>>>>>> a08f73d3d6f70ccd1f2c84fd90f46814dab48918
 		</ul>
    </div>
 </body>

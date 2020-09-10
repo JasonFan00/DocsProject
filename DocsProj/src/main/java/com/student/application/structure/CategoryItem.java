@@ -8,12 +8,12 @@ public class CategoryItem {
 	
 	private String itemName;
 	private String url;
-	private double num;
+	private String label;
 	
-	public CategoryItem(String itemName, String url, double num) {
+	public CategoryItem(String itemName, String url, String newLabel) {
 		this.itemName = itemName;
 		this.url = url;
-		this.num = num;
+		this.label = newLabel;
 	}
 	
 	
@@ -25,8 +25,8 @@ public class CategoryItem {
 		return this.url;
 	}
 	
-	public double getNum() {
-		return this.num;
+	public String getLabel() {
+		return this.label;
 	}
 	
 	public void setItemName(String newName) {
@@ -37,7 +37,7 @@ public class CategoryItem {
 		this.url = newUrl;
 	}
 	
-	public void setNum(double newNum) {
-		this.num = newNum;
+	public void setLabel(String newLabel) {
+		this.label = newLabel;
 	}
 }
