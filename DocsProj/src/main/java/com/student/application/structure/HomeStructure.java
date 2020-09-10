@@ -69,8 +69,7 @@ public class HomeStructure {
 				String absPath = FilenameUtils.getPath(file.getAbsolutePath().toLowerCase()); // Get path but no file name itself at end, added below
 				String path = absPath.substring(absPath.indexOf("repo") + 5); //  Want to get the substring starting after the /repo/ in the abs path
 				String url = ("/repo/" + path + fileNameOnly.toLowerCase()).replace(' ', '-');  //  to get to a repo page url path will always starts with /repo/.  This line is a mess to read, will cleanup later
-				Double num = Double.parseDouble(fileNameLabel);  // make this not a double but string in future for more flexibility
-				CategoryItem item = new CategoryItem(fileNameOnly, url, num);
+				CategoryItem item = new CategoryItem(fileNameOnly, url, fileNameLabel);
 				category.addItem(item);
 			}
 		}
