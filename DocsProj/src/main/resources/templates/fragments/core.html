@@ -10,6 +10,10 @@
    <div th:fragment="core">
 		<ul th:with="category = ${structure}">
 			<h1 th:text="${category.getCatName()}"></h1> <!--Apparently thymeleaf will call getters/setters automatically if they follow some "format", but for this call getter-->
+			<div th:if="${category.getCatDescriptor()}">
+				<br>
+				<h2>th:text="${category.getCatDescriptor()}"></h2>
+			</div>
 			<div class = "row">
 				<li th:each="item : ${category.getItems()}">
 					<div class="col-sm-2">

@@ -13,11 +13,17 @@ public class Category {
 	private List<Category> childrenCategories;
 	private List<CategoryItem> items;
 	private String catName;
+	private String catDescriptor;
 	
 	public Category(String name) {
 		this.childrenCategories = new ArrayList<>();
 		this.items = new ArrayList<>();
 		this.catName = name;
+	}
+	
+	public Category(String name, String catDescriptor) {
+		this(name);
+		this.catDescriptor = catDescriptor;
 	}
 	
 	public void addChildCategory(Category category) {
@@ -38,5 +44,13 @@ public class Category {
 	
 	public String getCatName() {
 		return this.catName;
+	}
+	
+	public void setCatDescriptor(String catDescriptor) {
+		this.catDescriptor = catDescriptor;
+	}
+	
+	public String getCatDescriptor() {
+		return this.catDescriptor;
 	}
 }

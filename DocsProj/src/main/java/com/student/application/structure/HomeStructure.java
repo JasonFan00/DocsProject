@@ -2,8 +2,12 @@ package com.student.application.structure;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +52,26 @@ public class HomeStructure {
 				if (files[i].isDirectory()) {
 					if (!files[i].getName().equals(".git")) {
 						// Make a new home category and add it to parent
-						Category categoryNew = new Category(files[i].getName());
+						
+						String catDescriptor = null;
+						File[] catFiles = files[i].listFiles(new FilenameFilter() {
+							@Override
+							public boolean accept(File dir, String name) { // anonymous class implementation for FilenameFilter interface, maybe refactor code later in places where this can be used instead of looping through list files
+								return name.toLowerCase().equals("CategoryDescriptor") && name.toLowerCase().endsWith(".txt");
+							}
+						});
+						
+						if (catFiles.length > 0) {
+							File descriptorFile = catFiles[0];
+							try {
+								catDescriptor = FileUtils.readFileToString(descriptorFile, "UTF-8");
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+						Category categoryNew = new Category(files[i].getName(), catDescriptor);
 						category.addChildCategory(categoryNew);
 						updateStructure(files[i], categoryNew);
 					}
