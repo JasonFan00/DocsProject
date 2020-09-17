@@ -11,8 +11,7 @@
 		<ul th:with="category = ${structure}">
 			<h1 th:text="${category.getCatName()}"></h1> <!--Apparently thymeleaf will call getters/setters automatically if they follow some "format", but for this call getter-->
 			<div th:if="${category.getCatDescriptor()}">
-				<br>
-				<h2>th:text="${category.getCatDescriptor()}"></h2>
+				<h4 th:text="${category.getCatDescriptor()}"></h4>
 			</div>
 			<div class = "row">
 				<li th:each="item : ${category.getItems()}">

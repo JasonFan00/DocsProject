@@ -57,7 +57,7 @@ public class HomeStructure {
 						File[] catFiles = files[i].listFiles(new FilenameFilter() {
 							@Override
 							public boolean accept(File dir, String name) { // anonymous class implementation for FilenameFilter interface, maybe refactor code later in places where this can be used instead of looping through list files
-								return name.toLowerCase().equals("CategoryDescriptor") && name.toLowerCase().endsWith(".txt");
+								return name.toLowerCase().equals("categorydescriptor.txt") && name.toLowerCase().endsWith(".txt");
 							}
 						});
 						
