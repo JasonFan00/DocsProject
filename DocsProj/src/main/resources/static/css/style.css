@@ -1,0 +1,54 @@
+.no-margin {
+	margin: 0px;
+}
+
+.no-padding {
+	padding: 0px;
+}
+
+.footer-header {
+	padding-left: 5px;
+	display:inline;
+}
+
+.deis-bg-color {
+	background-color: #003478;
+}
+
+.deis-color {
+	
+}
+
+.site-footer {
+	background-color: #797a7c;
+	color: #fff;
+	margin-top: 0px;
+	padding-top: 5px; 
+}
+
+.bottom-footer {
+	border-top: 1px solid #fff;
+	margin-top: 0px;
+	padding-top: 10px;
+
+}
+
+.bottom-footer a {
+	color: #fff;
+}
+
+.footer-nav {
+	text-align:  right;
+	list-style: none;
+}
+
+.footer-nav li {
+	display:inline;
+}
+
+.footer-nav li:not(:first-child):before {
+	content: '|';
+	padding: 0px 10px;
+}
+
+

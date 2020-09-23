@@ -4,20 +4,40 @@
 	<meta charset="ISO-8859-1">
 	
 	<title>title</title>
-	<link rel = "stylesheet" href = "/css/bootstrap.css">
+
 </head>
 <body>
    <div th:fragment="footer">
-		<footer class="page-footer font-small container-fluid">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-12">
-						<div>
-							<h2>Brandeis University</h2>
-							<h3>415 South St</h3>
-							<h4>Waltham MA, 02453</h4>
+		<footer class="site-footer font-small container-fluid">
+			<div class = "container">
+				<div class = "row">
+					<div class = "col-md-12">
+						<h3>
+							<i class="fas fa-cogs"></i><div class = "footer-header">The Docs Project, 2020</div>
+						</h3>
+						<p>
+							Docs is a spring MVC + thymeleaf web app that can generate a fully navigable, populated, and self-updating website from a mere collection of .md and .txt files organized in a folder hierarchy.  For the full overview, please visit the repo linked below.  This implementation of Docs serves as a basic resource for CS students.  The content of this site is hosted in the repo linked below, which is what Docs uses to generate the site.
+						</p>
+						<p>
+							Interested in contributing?  Please visit the links below and reach out to us!
+						</p>
+					</div>
+				</div>
+				<div class = "bottom-footer deis-color">
+					<div class = "row">
+						<div class = "col-md-3">
+							<a href="https://github.com/JasonFan00/DocsProject">
+								<i class="fas fa-code"></i>
+								<b>Docs Project Source</b>
+							</a>
 						</div>
-						
+						<div class = "col-md-9">
+							<ul class = "footer-nav">
+								<li><a href="#">Brandeis Home</a></li>
+								<li><a href="https://www.brandeis.edu/computer-science/">CompSci Home</a></li>
+								<li><a href="https://github.com/JasonFan00/Content">Content</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
