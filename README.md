@@ -1,2 +1,2 @@
 # Docs
-spring boot project
+spring MVC, thymeleaf project
