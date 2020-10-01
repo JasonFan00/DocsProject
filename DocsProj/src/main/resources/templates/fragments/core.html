@@ -13,7 +13,8 @@
 				<div th:if = "${category.getCatDescriptor()}">
 					<h4 th:text = "${category.getCatDescriptor()}"></h4>
 				</div>
-				<div class = "category"></div>
+				<div class = "category">
+				</div>
 				<li th:each = "item : ${category.getItems()}">
 					<div class = "col-sm-2">
 						<strong th:text = "${item.getLabel()}"></strong> <a th:href = "@{${item.getUrl()}}" th:text = "${item.getItemName()}"></a>
