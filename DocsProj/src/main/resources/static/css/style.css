@@ -19,14 +19,6 @@
 	
 }
 
-.container-fluid {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  background:#003478; 
-}
 
 .container-fluid::after {
   content:'';
@@ -34,21 +26,21 @@
   clear: both;
 }
 
-header{
+.header {
 	padding: 20px 0;
 	float: left;
 	color: #ffffff;
 	font-size: 30px;
-	margin-left: 10px;
+	background:#003478; 
 }
 
-nav ul{
+.nav ul{
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-nav li{
+.nav li{
 	display: inline-block;
 	margin-left: 70px;
 	padding-top: 50px;
@@ -56,11 +48,11 @@ nav li{
 	position: relative;
 }
 
-nav{
+.header-nav {
 	float: right;
 }
 
-nav a{
+.nav a{
 	font-weight: 300;
 	font-size: 15px;
 	color: #ffffff;
@@ -68,15 +60,14 @@ nav a{
 	text-transform: uppercase;
 }
 
-nav a:hover{
+.nav a:hover{
 	color: #000;
 }
 
-nav a::before{
+.nav a::before{
 	content: '';
 	display: block;
 	height:5px;
-	width:100%;
 	background-color: #ffffff;
 	position: absolute;
 	top: 20px;
@@ -84,7 +75,7 @@ nav a::before{
 	transition: all ease-in-out 250ms;
 }
 
-nav a:hover::before{
+.nav a:hover::before{
 	width: 100%;
 }
 
@@ -123,5 +114,9 @@ nav a:hover::before{
 
 .category {
 	border-bottom: 1px solid #212529;
+}
+
+.logo {
+	padding-left: 15px;
 }
 
