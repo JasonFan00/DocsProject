@@ -4,7 +4,7 @@ package com.student.application.structure;
  * This class represents the SubCategories that contain a name, an identifying number, and url to the html conversion to a 
  * markdown file
  * */
-public class CategoryItem {
+public class CategoryItem implements Comparable<CategoryItem> {
 	
 	private String itemName;
 	private String url;
@@ -39,5 +39,11 @@ public class CategoryItem {
 	
 	public void setLabel(String newLabel) {
 		this.label = newLabel;
+	}
+
+
+	@Override
+	public int compareTo(CategoryItem otherItem) {
+		return this.itemName.compareTo(otherItem.getItemName());
 	}
 }

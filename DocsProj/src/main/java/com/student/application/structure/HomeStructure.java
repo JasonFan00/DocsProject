@@ -99,6 +99,16 @@ public class HomeStructure {
 	}
 	
 	/**
+	 * Recursively sorts the category items lists
+	 */
+	private void sortCategoryItems(Category category) {
+		Collections.sort(category.getItems());
+		for (Category childCat : category.getChildCategories()) {
+			sortCategoryItems(childCat);
+		}
+	}
+	
+	/**
 	 * Prints out the structure
 	 * @param sb
 	 * @param category
@@ -155,6 +165,7 @@ public class HomeStructure {
 		// start at the top level
 		this.rootCategory = new Category("ROOT"); //  could some spring IoC thing manage local variables? Since new will couple it more
 		this.updateStructure(repoRoot, this.rootCategory); //  get any child categories and such
+		this.sortCategoryItems(this.rootCategory);  //  traverse the now in memory representation of the file structure and sort child categories
 		this.printStructure();
 		// To do...print out the result to make sure recursion correct
 	}
