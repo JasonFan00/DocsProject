@@ -44,6 +44,6 @@ public class CategoryItem implements Comparable<CategoryItem> {
 
 	@Override
 	public int compareTo(CategoryItem otherItem) {
-		return this.label.compareTo(otherItem.getLabel());
+		return this.label.compareTo(otherItem.getLabel());  //  Sort by labels
 	}
 }
