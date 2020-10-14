@@ -127,7 +127,7 @@ public class HomeStructure {
 		List<CategoryItem> categoryItems = category.getItems();
 		if (categoryItems.size() > 0) sb.append("\n");
 		for (int i = 0; i < categoryItems.size(); i++) {
-			sb.append("\t" + indents + "+" + categoryItems.get(i).getItemName());  //  Add file name, always get an extra indent
+			sb.append("\t" + indents + "+" + categoryItems.get(i).getLabel() + " " + categoryItems.get(i).getItemName());  //  Add file name, always get an extra indent
 			if (i != categoryItems.size() - 1) sb.append("\n"); // avoid extra unnecessary empty line for last elements
 		}
 		
@@ -165,7 +165,7 @@ public class HomeStructure {
 		// start at the top level
 		this.rootCategory = new Category("ROOT"); //  could some spring IoC thing manage local variables? Since new will couple it more
 		this.updateStructure(repoRoot, this.rootCategory); //  get any child categories and such
-		this.sortCategoryItems(this.rootCategory);  //  traverse the now in memory representation of the file structure and sort child categories
+		this.sortCategoryItems(this.rootCategory);  //  traverse the now in memory representation of the file structure and sort child category items
 		this.printStructure();
 		// To do...print out the result to make sure recursion correct
 	}
