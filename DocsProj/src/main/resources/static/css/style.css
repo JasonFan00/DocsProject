@@ -66,10 +66,11 @@
 .nav a::before{
 	content: '';
 	display: block;
+	height: 5px;
 	background-color: #ffffff;
 	position: absolute;
-	top: 20px;
-	width:0%;
+	top: 15px;
+	width: 0%;
 	transition: all ease-in-out 250ms;
 }
 
