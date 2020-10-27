@@ -22,6 +22,10 @@ public class HomeController {
 	public String homeController(Model model) {
 		model.addAttribute("greeting", "Hello World!"); 
 		model.addAttribute("structure", this.HomeStructure.getRootCategory());
+		
+		
+		
+		
 		return "index";
 	}
 }

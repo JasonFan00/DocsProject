@@ -30,10 +30,13 @@ public class HomeStructure {
 	@Value("${numberSeparatorStr}")
 	private String NUMBER_SEPARATOR_STR;
 	
+	private Integer MAX_ELES_PER_ROW; // maximum number of category items per row , got here bc this class is a bean then passed to the non-bean category via constructor
+	
 	private Category rootCategory;
 	
-	public HomeStructure() {
-		this.rootCategory = new Category("ROOT");
+	public HomeStructure(@Value("${core.max-cols-per-category}") Integer MAX_ELES_PER_ROW) {  //  Doing this as argument because if it's class property like numberSepStr, then injection is done AFTER constructor is called, so if it is used in constructor is null (had an issue with this)
+		this.MAX_ELES_PER_ROW = MAX_ELES_PER_ROW;
+		this.rootCategory = new Category("ROOT", MAX_ELES_PER_ROW);
 	}
 	
 	public Category getRootCategory() {
@@ -71,7 +74,7 @@ public class HomeStructure {
 							}
 						}
 						
-						Category categoryNew = new Category(files[i].getName(), catDescriptor);
+						Category categoryNew = new Category(files[i].getName(), catDescriptor, MAX_ELES_PER_ROW);
 						category.addChildCategory(categoryNew);
 						updateStructure(files[i], categoryNew);
 					}
@@ -102,7 +105,11 @@ public class HomeStructure {
 	 * Recursively sorts the category items lists
 	 */
 	private void sortCategoryItems(Category category) {
-		Collections.sort(category.getItems());
+		
+		for (ArrayList<CategoryItem> rowItemList : category.getItems()) {
+			Collections.sort(rowItemList);
+		}
+		
 		for (Category childCat : category.getChildCategories()) {
 			sortCategoryItems(childCat);
 		}
@@ -124,11 +131,16 @@ public class HomeStructure {
 		String indents = indentSB.toString();
 		sb.append(indents);
 		sb.append(category.getCatName()); //  Add directory name
-		List<CategoryItem> categoryItems = category.getItems();
-		if (categoryItems.size() > 0) sb.append("\n");
-		for (int i = 0; i < categoryItems.size(); i++) {
-			sb.append("\t" + indents + "+" + categoryItems.get(i).getLabel() + " " + categoryItems.get(i).getItemName());  //  Add file name, always get an extra indent
-			if (i != categoryItems.size() - 1) sb.append("\n"); // avoid extra unnecessary empty line for last elements
+		List<ArrayList<CategoryItem>> categoryItemsGrid = category.getItems();
+		if (categoryItemsGrid.size() > 0) sb.append("\n");
+		
+		for (int i = 0; i < categoryItemsGrid.size(); i++) {
+			List<CategoryItem> row = categoryItemsGrid.get(i);
+			for (CategoryItem item : row) {
+				sb.append("\t" + indents + "+" + item.getLabel() + " " +item.getItemName());  //  Add file name, always get an extra indent
+				if (i != categoryItemsGrid.size() - 1) sb.append("\n"); // avoid extra unnecessary empty line for last elements
+			}
+			
 		}
 		
 		
@@ -161,12 +173,11 @@ public class HomeStructure {
 			System.out.println("Unable to open repo file directory for structure: \n" + e.getStackTrace());
 		}
 		
-		// To do...from the local repo root now construct the structure.  Each directory that has .md/.html files is a category.  Should consider making sub-sub-sub... categories (directories within directories that may/may not contain .md/.html files ("pages").
+		// Each directory that has .md/.html files is a category. Can do sub-sub-sub... categories (directories within directories that may/may not contain .md/.html files ("pages").
 		// start at the top level
-		this.rootCategory = new Category("ROOT"); //  could some spring IoC thing manage local variables? Since new will couple it more
+		this.rootCategory = new Category("ROOT", MAX_ELES_PER_ROW); //  could some spring IoC thing manage local variables? Since new will couple it more
 		this.updateStructure(repoRoot, this.rootCategory); //  get any child categories and such
 		this.sortCategoryItems(this.rootCategory);  //  traverse the now in memory representation of the file structure and sort child category items
 		this.printStructure();
-		// To do...print out the result to make sure recursion correct
 	}
 }

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,4 +115,5 @@ public class RepoController implements CommandLineRunner {
 	public void run(String... args) {
 		this.builder.generateHTMLFromDir(new File(config.getRepoPath()));
 	}
+
 }
