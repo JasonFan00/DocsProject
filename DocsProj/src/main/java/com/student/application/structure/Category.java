@@ -19,14 +19,14 @@ public class Category {
 	
 	private int maxElesPerRow;
 	
-	public Category(String name, Integer maxElesPerRowProperty) {  //  maxElesPerRow stored in app properties, this class not managed by spring (not a bean) so can't use @value directly
-		this.maxElesPerRow = (int)maxElesPerRowProperty;
+	public Category(String name, int maxElesPerRowProperty) {  //  maxElesPerRow stored in app properties, this class not managed by spring (not a bean) so can't use @value directly
+		this.maxElesPerRow = maxElesPerRowProperty;
 		this.childrenCategories = new ArrayList<>();
 		this.items = new ArrayList<ArrayList<CategoryItem>>();
 		this.catName = name;
 	}
 	
-	public Category(String name, String catDescriptor, Integer maxElesPerRowProperty) {
+	public Category(String name, String catDescriptor, int maxElesPerRowProperty) {
 		this(name, maxElesPerRowProperty);
 		this.catDescriptor = catDescriptor;
 	}

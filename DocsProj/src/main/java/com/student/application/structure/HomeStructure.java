@@ -30,13 +30,13 @@ public class HomeStructure {
 	@Value("${numberSeparatorStr}")
 	private String NUMBER_SEPARATOR_STR;
 	
-	private Integer MAX_ELES_PER_ROW; // maximum number of category items per row , got here bc this class is a bean then passed to the non-bean category via constructor
+	private int MAX_ELES_PER_ROW; // maximum number of category items per row , got here bc this class is a bean then passed to the non-bean category via constructor
 	
 	private Category rootCategory;
 	
 	public HomeStructure(@Value("${core.max-cols-per-category}") Integer MAX_ELES_PER_ROW) {  //  Doing this as argument because if it's class property like numberSepStr, then injection is done AFTER constructor is called, so if it is used in constructor is null (had an issue with this)
-		this.MAX_ELES_PER_ROW = MAX_ELES_PER_ROW;
-		this.rootCategory = new Category("ROOT", MAX_ELES_PER_ROW);
+		this.MAX_ELES_PER_ROW = (int)MAX_ELES_PER_ROW;
+		this.rootCategory = new Category("ROOT", this.MAX_ELES_PER_ROW);
 	}
 	
 	public Category getRootCategory() {
