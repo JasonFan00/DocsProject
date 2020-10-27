@@ -17,7 +17,7 @@ public class Category {
 	private String catName;
 	private String catDescriptor;
 	
-	private int maxElesPerRow;
+	private int maxElesPerRow;  //  How many category items can be in each row, stored in app properties
 	
 	public Category(String name, int maxElesPerRowProperty) {  //  maxElesPerRow stored in app properties, this class not managed by spring (not a bean) so can't use @value directly
 		this.maxElesPerRow = maxElesPerRowProperty;
