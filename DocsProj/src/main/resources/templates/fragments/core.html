@@ -19,7 +19,7 @@
 				
 				<div th:each = "row : ${category.getItems()}">
 					<div class = "row">
-						<div th:each = "item : ${row}" th:remove = "tag">
+						<div th:each = "item : ${row}" th:remove = "tag"> <!-- Remove this tag else it will create a <div> between row div and col div, which breaks col div/doesn't work-->
 							<div class = "col-sm-3">
 								<li class = "list-item">
 									<div class = "align-middle item-label text-left font-weight-light text-nowrap" th:text = "${item.getLabel()}"></div>
