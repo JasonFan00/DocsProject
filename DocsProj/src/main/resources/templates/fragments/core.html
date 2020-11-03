@@ -22,7 +22,9 @@
 						<div th:each = "item : ${row}">
 							<div class = "col-sm-2">
 								<li class = "list-item">
-										<div class = "align-middle item-label text-left font-weight-light text-nowrap" th:text = "${item.getLabel()}"></div> <a class = "item-link align-middle" th:href = "@{${item.getUrl()}}" th:text = "${item.getItemName()}"></a>
+									<div class = "align-middle item-label text-left font-weight-light text-nowrap" th:text = "${item.getLabel()}"></div>
+									<a class = "item-link align-middle" th:href = "@{${item.getUrl()}}" th:text = "${item.getItemName()}"></a>									
+									
 								</li>
 							</div>
 						</div>

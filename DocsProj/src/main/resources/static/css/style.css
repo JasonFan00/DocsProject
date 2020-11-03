@@ -133,6 +133,7 @@
 }
 
 .list-item {
+	display:inline-block;
 	list-style-type: none;
 }
 
