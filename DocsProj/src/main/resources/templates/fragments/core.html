@@ -19,8 +19,8 @@
 				
 				<div th:each = "row : ${category.getItems()}">
 					<div class = "row">
-						<div th:each = "item : ${row}">
-							<div class = "col-sm-2">
+						<div th:each = "item : ${row}" th:remove = "tag">
+							<div class = "col-sm-3">
 								<li class = "list-item">
 									<div class = "align-middle item-label text-left font-weight-light text-nowrap" th:text = "${item.getLabel()}"></div>
 									<a class = "item-link align-middle" th:href = "@{${item.getUrl()}}" th:text = "${item.getItemName()}"></a>									

@@ -128,11 +128,11 @@
 }
 
 .item-link {
-	
+	display: inline-block;
 }
 
 .list-item {
-	display:inline-block;
+	display: inline-block;
 	list-style-type: none;
 }
 
