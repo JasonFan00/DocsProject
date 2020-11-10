@@ -20,9 +20,8 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String homeController(Model model) {
-		model.addAttribute("greeting", "Hello World!"); 
 		model.addAttribute("structure", this.HomeStructure.getRootCategory());
-		
+		model.addAttribute("level", 0);
 		
 		
 		
