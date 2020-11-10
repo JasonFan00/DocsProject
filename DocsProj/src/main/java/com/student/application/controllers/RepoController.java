@@ -52,6 +52,7 @@ public class RepoController implements CommandLineRunner {
 	
 	@RequestMapping("/repo/**")
 	public String repoController(HttpServletRequest request) {
+		System.out.println("Received");
 		String uri = request.getRequestURI().toString();
 		String repoPath = config.getRepoPath();
 		String[] subPaths = uri.split("/");
@@ -60,10 +61,12 @@ public class RepoController implements CommandLineRunner {
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
-				String fullPathURL = uri.replace("/", File.separator); //  clean up the url a bit
-				String dirPathURL = fullPathURL.substring(5, docPageSeparator).replace('-', ' '); //  let dashes in the URL represent spaces
-				File file = new File(repoPath + dirPathURL);
+				String dirPathURL = uri.replace("/", File.separator).substring(5, docPageSeparator); //  clean up the url a bit
 				
+				String dirPathURLNoDashes = dirPathURL.replace('+', ' '); //  let + in the URL represent spaces
+				File file = new File(repoPath + dirPathURLNoDashes);
+				
+				System.out.println(repoPath + dirPathURLNoDashes);
 				if (file.exists() && file.isDirectory()) {  //  Search for the file to serve, if any
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
@@ -73,15 +76,16 @@ public class RepoController implements CommandLineRunner {
 							try {
 								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
 							} catch (IOException e) {
-								
+								e.printStackTrace();
 							}
 						}
 					}
 				}
+				System.out.println("2");
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 			}
 		}
-		
+		System.out.println("1");
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
 	
