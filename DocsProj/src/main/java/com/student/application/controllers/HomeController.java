@@ -22,9 +22,11 @@ public class HomeController {
 	public String homeController(Model model) {
 		model.addAttribute("structure", this.HomeStructure.getRootCategory());
 		model.addAttribute("level", 0);
-		
-		
-		
 		return "index";
+	}
+	
+	@RequestMapping("/about")
+	public String aboutController() {		
+		return "about";
 	}
 }
