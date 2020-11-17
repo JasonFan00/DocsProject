@@ -18,6 +18,7 @@ Some notable things:
 Our goal is to make this useful to the Brandeis CS dept!
 
 Content repo:  https://github.com/JasonFan00/Content
+
 https://github.com/joeyespo/grip
 
 Spring MVC, Thymeleaf, HTML/CSS
