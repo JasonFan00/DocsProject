@@ -1,4 +1,4 @@
-# Docs
+# Docs (WIP)
 
 Docs is a web application that will take a set of .md files organized in a file structure, and generate a navigable, styled, and scalable website.  In a nutshell, here's how it works:
 
@@ -15,7 +15,7 @@ Some notable things:
 4.  When a change is made to the content repository (content repo stores the file structure/folders/.md files that make up the content of the site), it sends a ping to the web app to update itself.
 5.  The important bit for the front-end is "core", aka the section of the home page that is dynamically generated based on the content.  It is a thymeleaf fragment, so can easily be plugged into other web pages/needs!
 
-Our goal is to make this useful to Brandeis CS!
+Our goal is to make this useful to the Brandeis CS dept!
 
 Content repo:  https://github.com/JasonFan00/Content
 
