@@ -36,6 +36,7 @@ public class Category {
 	}
 	
 	public void addItem(CategoryItem item) {
+
 		boolean assigned = false;
 		for (int i = 0; i < this.items.size(); i++) {
 			List<CategoryItem> rowsList = this.items.get(i);
@@ -71,5 +72,9 @@ public class Category {
 	
 	public String getCatDescriptor() {
 		return this.catDescriptor;
+	}
+	
+	public void clearItems() {
+		this.items = new ArrayList<ArrayList<CategoryItem>>();
 	}
 }

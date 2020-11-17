@@ -51,6 +51,7 @@ public class HomeStructure {
 		if (!file.exists() || file.getName().equals(".git")) return; // can ignore the .git from cloning remote repo
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
+			
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].isDirectory()) {
 					if (!files[i].getName().equals(".git")) {
@@ -102,16 +103,25 @@ public class HomeStructure {
 	}
 	
 	/**
-	 * Recursively sorts the category items lists
+	 * Recursively sorts the category items lists, does a "2d sort"
 	 */
-	private void sortCategoryItems(Category category) {
+	private void sortCategoryItemsRows(Category category) {
+		ArrayList<CategoryItem> temp = new ArrayList<>();
 		
-		for (ArrayList<CategoryItem> rowItemList : category.getItems()) {
-			Collections.sort(rowItemList);
+		for (ArrayList<CategoryItem> rowItemList : category.getItems()) {  //  Flatten 2d array of categoryitems into a 1d array
+			for (CategoryItem catItem : rowItemList) {
+				temp.add(catItem);
+			}
+			
 		}
 		
-		for (Category childCat : category.getChildCategories()) {
-			sortCategoryItems(childCat);
+		Collections.sort(temp); //  Sort the 1d array
+		
+		//  Convert it back into the 2d array representation that view needs, first clear out all the arraylists/unsorted elements
+		category.clearItems();
+		
+		for (CategoryItem catItem : temp) {
+			category.addItem(catItem);  //  add item method handles creating new arraylists and stuff
 		}
 	}
 	
@@ -177,7 +187,7 @@ public class HomeStructure {
 		// start at the top level
 		this.rootCategory = new Category("ROOT", MAX_ELES_PER_ROW); //  could some spring IoC thing manage local variables? Since new will couple it more
 		this.updateStructure(repoRoot, this.rootCategory); //  get any child categories and such
-		this.sortCategoryItems(this.rootCategory);  //  traverse the now in memory representation of the file structure and sort child category items
+		this.sortCategoryItemsRows(this.rootCategory);  //  traverse the now in memory representation of the file structure and sort child category items
 		this.printStructure();
 	}
 }
