@@ -40,7 +40,7 @@ public class CategoryItem implements Comparable<CategoryItem> {
 	public void setLabel(String newLabel) {
 		this.label = newLabel;
 	}
-
+	
 	
 	@Override
 	public int compareTo(CategoryItem otherItem) {

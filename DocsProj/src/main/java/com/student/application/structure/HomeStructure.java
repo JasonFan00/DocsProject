@@ -42,7 +42,7 @@ public class HomeStructure {
 	public Category getRootCategory() {
 		return this.rootCategory;
 	}
-	
+
 	
 	private void updateStructure(File file, Category category) {
 		if (!file.exists() || file.getName().equals(".git")) return; // can ignore the .git from cloning remote repo
@@ -100,7 +100,7 @@ public class HomeStructure {
 	}
 	
 	/**
-	 * Recursively sorts the category items lists, does a "2d sort"
+	 * Recursively sorts the category items lists, SORTS INDIVIDUAL ROWS
 	 */
 	private void sortCategoryItemsRows(Category category) {
 		ArrayList<CategoryItem> temp = new ArrayList<>();
