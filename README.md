@@ -15,6 +15,8 @@ Some notable things:
 4.  When a change is made to the content repository (content repo stores the file structure/folders/.md files that make up the content of the site), it sends a ping to the web app to update itself.
 5.  The important bit for the front-end is "core", aka the section of the home page that is dynamically generated based on the content.  It is a thymeleaf fragment, so can easily be plugged into other web pages/needs!
 
+![Sample Image]("https://i.imgur.com/A7LVnfg.png")
+
 Our goal is to make this useful to the Brandeis CS dept!
 
 Content repo:  https://github.com/JasonFan00/Content
