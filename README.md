@@ -14,6 +14,7 @@ Some notable things:
 3.  Each category (folder in the file structure) can have a "CategoryDescriptor.txt", which becomes a little sub-heading to each category heading.
 4.  When a change is made to the content repository (content repo stores the file structure/folders/.md files that make up the content of the site), it sends a ping to the web app to update itself.
 5.  The important bit for the front-end is "core", aka the section of the home page that is dynamically generated based on the content.  It is a thymeleaf fragment, so can easily be plugged into other web pages/needs!
+6.  See content repository for how naming convention of the .md/.html files affects the outcome!
 
 ![Sample Image](https://i.imgur.com/A7LVnfg.png)
 
