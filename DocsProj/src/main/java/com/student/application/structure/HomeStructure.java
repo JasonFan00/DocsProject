@@ -43,9 +43,6 @@ public class HomeStructure {
 		return this.rootCategory;
 	}
 	
-	public String hello(){
-		return null;
-	}
 	
 	private void updateStructure(File file, Category category) {
 		if (!file.exists() || file.getName().equals(".git")) return; // can ignore the .git from cloning remote repo
