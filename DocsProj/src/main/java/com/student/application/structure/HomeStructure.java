@@ -102,6 +102,7 @@ public class HomeStructure {
 	/**
 	 * Recursively sorts the category items lists, does a "2d sort"
 	 */
+	
 	private void sortCategoryItemsRows(Category category) {
 		ArrayList<CategoryItem> temp = new ArrayList<>();
 		
@@ -118,7 +119,12 @@ public class HomeStructure {
 		category.clearItems();
 		
 		for (CategoryItem catItem : temp) {
+			System.out.println("print catItem: "+catItem.getItemName());
 			category.addItem(catItem);  //  add item method handles creating new arraylists and stuff
+		}
+		
+		for(Category childCategory: category.getChildCategories()){
+			sortCategoryItemsRows(childCategory);
 		}
 	}
 	
