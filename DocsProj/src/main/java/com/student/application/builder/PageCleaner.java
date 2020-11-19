@@ -25,6 +25,9 @@ public class PageCleaner {
 		try {
 			Document doc = Jsoup.parse(file, "UTF-8");
 			Elements eles = doc.getElementsByClass("octicon-book");
+			
+			doc.select("link[rel='icon']").attr("href", "");  //  Get the favicon returned by github api, set it to blank
+
 			for (Element ele : eles) {
 				//  Select the inner octicon then get its parent <h3>, and then can remove
 				if (ele.hasParent()) {
