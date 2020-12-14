@@ -61,19 +61,25 @@ public class RepoController implements CommandLineRunner {
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
+				docName = docName.replace('+', ' ');
 				String dirPathURL = uri.replace("/", File.separator).substring(5, docPageSeparator); //  clean up the url a bit
 				
 				String dirPathURLNoDashes = dirPathURL.replace('+', ' '); //  let + in the URL represent spaces
 				File file = new File(repoPath + dirPathURLNoDashes);
 				
-				System.out.println(repoPath + dirPathURLNoDashes);
 				if (file.exists() && file.isDirectory()) {  //  Search for the file to serve, if any
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
-						if (fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR)[1].equals(docName) && fileExt.equals("html")) {
+						System.out.println(fileNameNoExt + " " + fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR)[0]);
+						String[] split = fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR);
+						if (split.length > 1) {
+							System.out.println(split[1] + " " + docName);
+						}
+						if (split.length > 1 && split[1].equals(docName) && fileExt.equals("html")) {  // don't process categorydescriptor (will be length 1 as it has no = so out of bounds)
 							try {
+							
 								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
 							} catch (IOException e) {
 								e.printStackTrace();
@@ -81,11 +87,9 @@ public class RepoController implements CommandLineRunner {
 						}
 					}
 				}
-				System.out.println("2");
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 			}
 		}
-		System.out.println("1");
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
 	
