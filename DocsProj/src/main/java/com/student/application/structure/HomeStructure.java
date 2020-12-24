@@ -90,9 +90,9 @@ public class HomeStructure {
 				String[] itemNameParts = filNameFull.split(NUMBER_SEPARATOR_STR);
 				String fileNameOnly = FilenameUtils.removeExtension(itemNameParts[1]);
 				String fileNameLabel = itemNameParts[0];
-				String absPath = FilenameUtils.getPath(file.getAbsolutePath().toLowerCase()); // Get path but no file name itself at end, added below
+				String absPath = FilenameUtils.getPath(file.getAbsolutePath()); // Get path but no file name itself at end, added below
 				String path = absPath.substring(absPath.indexOf("repo") + 5); //  Want to get the substring starting after the /repo/ in the abs path
-				String url = ("/repo/" + path + fileNameOnly.toLowerCase()).replace(' ', '+');  //  to get to a repo page url path will always starts with /repo/.  This line is a mess to read, will cleanup later
+				String url = ("/repo/" + path + fileNameOnly).replace(' ', '+');  //  to get to a repo page url path will always starts with /repo/.  This line is a mess to read, will cleanup later
 				CategoryItem item = new CategoryItem(fileNameOnly, url, fileNameLabel);
 				category.addItem(item);
 			}
