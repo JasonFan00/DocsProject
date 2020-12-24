@@ -52,15 +52,11 @@ public class RepoController implements CommandLineRunner {
 	
 	@RequestMapping("/repo/**")
 	public String repoController(HttpServletRequest request) {
-		System.out.println("Received");
 		String uri = request.getRequestURI().toString();
 		String repoPath = config.getRepoPath();
 		String[] subPaths = uri.split("/");
-		System.out.println(uri);
 		if (subPaths.length > 1) {
-			System.out.println("1");
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
-				System.out.println("2");
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1);  
 				docName = docName.replace('+', ' ');
@@ -68,14 +64,11 @@ public class RepoController implements CommandLineRunner {
 				
 				String dirPathURLNoDashes = dirPathURL.replace('+', ' '); //  let + in the URL represent spaces
 				File file = new File(repoPath + dirPathURLNoDashes);
-				System.out.println(repoPath + dirPathURLNoDashes);
 				if (file.exists() && file.isDirectory()) {  //  Search for the file to serve, if any
-					System.out.println("3");
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
-						System.out.println(fileNameNoExt + " " + fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR)[0]);
 						String[] split = fileNameNoExt.split(this.NUMBER_SEPARATOR_STR);
 						if (split.length > 1) {
 							System.out.println(split[1] + " " + docName);
