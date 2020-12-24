@@ -76,7 +76,7 @@ public class RepoController implements CommandLineRunner {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
 						String fileExt = FilenameUtils.getExtension(files[i].getName());
 						System.out.println(fileNameNoExt + " " + fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR)[0]);
-						String[] split = fileNameNoExt.toLowerCase().split(this.NUMBER_SEPARATOR_STR);
+						String[] split = fileNameNoExt.split(this.NUMBER_SEPARATOR_STR);
 						if (split.length > 1) {
 							System.out.println(split[1] + " " + docName);
 						}
