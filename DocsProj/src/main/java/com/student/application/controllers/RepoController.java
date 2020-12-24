@@ -56,9 +56,11 @@ public class RepoController implements CommandLineRunner {
 		String uri = request.getRequestURI().toString();
 		String repoPath = config.getRepoPath();
 		String[] subPaths = uri.split("/");
-		
+		System.out.println(uri);
 		if (subPaths.length > 1) {
+			System.out.println("1");
 			if (subPaths[1].equals("repo")) {  // Check if it's a request to a page from the repo
+				System.out.println("2");
 				int docPageSeparator = uri.lastIndexOf("/");
 				String docName = uri.substring(docPageSeparator + 1).toLowerCase();  //  Lowercase for url lowercase convention
 				docName = docName.replace('+', ' ');
@@ -68,6 +70,7 @@ public class RepoController implements CommandLineRunner {
 				File file = new File(repoPath + dirPathURLNoDashes);
 				
 				if (file.exists() && file.isDirectory()) {  //  Search for the file to serve, if any
+					System.out.println("3");
 					File[] files = file.listFiles();
 					for (int i = 0; i < files.length; i++) {
 						String fileNameNoExt = FilenameUtils.removeExtension(files[i].getName());
@@ -79,7 +82,7 @@ public class RepoController implements CommandLineRunner {
 						}
 						if (split.length > 1 && split[1].equals(docName) && fileExt.equals("html")) {  // don't process categorydescriptor (will be length 1 as it has no = so out of bounds)
 							try {
-							
+								System.out.println("Returning found");
 								return Files.readString(Paths.get(files[i].getPath()), StandardCharsets.ISO_8859_1); // Java 11 , malformed exception from UTF_8 after sending a cleaned page
 							} catch (IOException e) {
 								e.printStackTrace();
