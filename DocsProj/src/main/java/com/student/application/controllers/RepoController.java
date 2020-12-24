@@ -68,7 +68,7 @@ public class RepoController implements CommandLineRunner {
 				
 				String dirPathURLNoDashes = dirPathURL.replace('+', ' '); //  let + in the URL represent spaces
 				File file = new File(repoPath + dirPathURLNoDashes);
-				
+				System.out.println(repoPath + dirPathURLNoDashes);
 				if (file.exists() && file.isDirectory()) {  //  Search for the file to serve, if any
 					System.out.println("3");
 					File[] files = file.listFiles();
