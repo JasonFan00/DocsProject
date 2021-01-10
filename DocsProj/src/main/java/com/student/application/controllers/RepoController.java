@@ -96,7 +96,7 @@ public class RepoController implements CommandLineRunner {
 		try {
 			String body = request.getReader().lines().collect(Collectors.joining());  
 			String key = System.getenv(var);
-			System.out.println("body: "+ body);
+			System.out.println("var: "+ var);
 			System.out.println("key: "+ key);
 
 			String hash = "sha1=" + new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(body);  //  Create new hmac instance using SHA1 and env key, then get the digest of request body
