@@ -94,9 +94,11 @@ public class RepoController implements CommandLineRunner {
 	public String refreshController(HttpServletRequest request, @RequestHeader("X-Hub-Signature") String reqSha1, @Value("${repoEnvName}") String var) { 	
 		//  To do:  Can use jgit to get more details
 		try {
+			
 			String body = request.getReader().lines().collect(Collectors.joining());  
 			String key = System.getenv(var);
-
+			
+			
 			String hash = "sha1=" + new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(body);  //  Create new hmac instance using SHA1 and env key, then get the digest of request body
 			
 			if (hash.equals(reqSha1)) {  // .equals secure?
