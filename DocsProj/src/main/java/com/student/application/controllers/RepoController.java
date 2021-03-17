@@ -92,28 +92,25 @@ public class RepoController implements CommandLineRunner {
 	
 	@RequestMapping("/refresh-ping") //  Verb or noun?
 	public String refreshController(HttpServletRequest request, @RequestHeader("X-Hub-Signature") String reqSha1, @Value("${repoEnvName}") String var) { 	
-		//  To do:  Can use jgit to get more details
-		try {
-			
-			String body = request.getReader().lines().collect(Collectors.joining());  
-			String key = System.getenv(var);
-			
-			
-			String hash = "sha1=" + new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(body);  //  Create new hmac instance using SHA1 and env key, then get the digest of request body
-			
-			if (hash.equals(reqSha1)) {  // .equals secure?
-				//  Verified the ping is from github 
+	//  To do:  Can use jgit to get more details
+			try {
+				String body = request.getReader().lines().collect(Collectors.joining());  
+				String key = System.getenv(var);
+				String hash = "sha1=" + new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(body);  //  Create new hmac instance using SHA1 and env key, then get the digest of request body
 				
-				// To do:  Clone the remote repo again before re-generating
-				
-				
-				this.builder.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
+				if (hash.equals(reqSha1)) {  // .equals secure?
+					//  Verified the ping is from github 
+					
+					// To do:  Clone the remote repo again before re-generating
+					
+					
+					this.builder.generateHTMLFromDir(new File(config.getRepoPath())); // for now regenerates whole thing, in future only regen starting from dir that changed
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "";
+			
+			return "";
 	}
 	
 	
