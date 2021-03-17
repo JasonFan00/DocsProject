@@ -98,7 +98,7 @@ public class RepoController implements CommandLineRunner {
 				String key = System.getenv(var);
 				String hash = "sha1=" + new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmacHex(body);  //  Create new hmac instance using SHA1 and env key, then get the digest of request body
 				
-				if (hash.equals(reqSha1)) {  // .equals secure?
+				if (hash.equals(reqSha1)) {  
 					//  Verified the ping is from github 
 					
 					// To do:  Clone the remote repo again before re-generating
